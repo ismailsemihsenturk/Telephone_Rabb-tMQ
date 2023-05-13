@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	  <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Telephone_ISS_ACS.ReportService.DataAccessLayer\Telephone_ISS_ACS.ReportService.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\Telephone_ISS_ACS.UserService.DataAccessLayer\Telephone_ISS_ACS.UserService.DataAccessLayer.csproj" />
+  </ItemGroup>
+
+</Project>

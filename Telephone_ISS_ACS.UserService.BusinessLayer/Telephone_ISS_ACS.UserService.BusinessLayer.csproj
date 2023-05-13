@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Telephone_ISS_ACS.UserService.DataAccessLayer\Telephone_ISS_ACS.UserService.DataAccessLayer.csproj" />
+	  <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Managers\" />
+    <Folder Include="DTOs\" />
+  </ItemGroup>
+
+</Project>

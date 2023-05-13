@@ -1,0 +1,184 @@
+﻿@page "/phonebook"
+
+@using Telephone_ISS_ACS.UserService.DataAccessLayer.Context;
+@using Telephone_ISS_ACS.UserService.DataAccessLayer.Entities;
+@using Telephone_ISS_ACS.UserService.DataAccessLayer.Concrete;
+
+@inject Telephone_ISS_ACS.UserService.DataAccessLayer.Context.PhoneBookContext context;
+
+
+@if (hasRecord)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Last Name</th>
+                <th>Company</th>
+                <th>Contact Information</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var entry in allRecords)
+            {
+                <tr>
+                    <td>@entry.Id</td>
+                    <td>@entry.FirstName</td>
+                    <td>@entry.LastName</td>
+                    <td>@entry.Company</td>
+                    <td>
+                        @foreach (var contactInfo in entry.ContactInformation)
+                        {
+                            <div>
+                                <strong>Type: @contactInfo.Type</strong>
+                                Info: @contactInfo.Info<br />                         
+                            </div>
+                        }
+                    </td>
+                    <td>
+                        <button @onclick="(() => 
+                            {newPhoneBookEntry = entry; isUpdate = true;
+                            telephoneContactInfo = entry.ContactInformation.Find(x => x.Type == ContactType.PhoneNumber); 
+                            emailContactInfo = entry.ContactInformation.Find(x => x.Type == ContactType.EmailAddress); 
+                            locationContactInfo = entry.ContactInformation.Find(x => x.Type == ContactType.Location);})">X</button>Update</td>
+                    <td> <button @onclick="(() => Delete(entry))">X</button>Delete</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No entries found in the phone book.</p>
+}
+
+<hr />
+
+<h3>Add New Entry</h3>
+<hr />
+<h5>Personal Information</h5>
+<div>
+    <label for="firstName">First Name:</label>
+    <input id="firstName" type="text" @bind="@newPhoneBookEntry.FirstName" />
+</div>
+
+<div>
+    <label for="lastName">Last Name:</label>
+    <input id="lastName" type="text" @bind="@newPhoneBookEntry.LastName" />
+</div>
+
+<div>
+    <label for="company">Company:</label>
+    <input id="company" type="text" @bind="@newPhoneBookEntry.Company" />
+</div>
+
+<br/>
+<hr />
+<h5>Contact Information</h5>
+<div>
+    <label for="telephone-type">Telephone:</label>
+    <input id="telephone-type" type="text" @bind="@telephoneContactInfo.Info" />
+</div>
+
+<div>
+    <label for="email-type">Email: </label>
+    <input id="email-type" type="text" @bind="@emailContactInfo.Info" />
+</div>
+
+<div>
+    <label for="telephone-type">Location:</label>
+    <input id="telephone-type" type="text" @bind="@locationContactInfo.Info" />
+</div>
+
+
+<div>
+    @if (!isUpdate)
+    {
+        <button @onclick="Add">Add Entry</button>
+    }
+    else
+    {
+        <button @onclick="(() =>Update(newPhoneBookEntry))">Update Entry</button>
+    }
+    <button @onclick="Report">Receive a Report</button>
+
+</div>
+
+
+@code {
+
+    private PhoneBookService phoneBookService;
+    private PhoneBookEntry newPhoneBookEntry = new PhoneBookEntry();
+    private List<ContactInformation> newContactInformationEntry = new List<ContactInformation>();
+    private List<PhoneBookEntry> allRecords;
+    private bool isUpdate = false;
+    private bool hasRecord = false;
+
+
+    private ContactInformation telephoneContactInfo = new ContactInformation
+        {
+            Type = ContactType.PhoneNumber
+        };
+    private ContactInformation emailContactInfo = new ContactInformation
+        {
+            Type = ContactType.EmailAddress
+        };
+    private ContactInformation locationContactInfo = new ContactInformation
+        {
+            Type = ContactType.Location
+        };
+
+
+    protected override async  Task OnInitializedAsync()
+    {
+        phoneBookService = new PhoneBookService(context); 
+        allRecords = await phoneBookService.GetAllEntries();
+        hasRecord = allRecords.Count > 0 ? true : false;
+    }
+
+
+    private async Task Add()
+    {
+        //newPhoneBookEntry.ContactInformation = new List<ContactInformation>();
+        //newPhoneBookEntry.ContactInformation.Add(emailContactInfo);
+        //newPhoneBookEntry.ContactInformation.Add(telephoneContactInfo);
+        //newPhoneBookEntry.ContactInformation.Add(locationContactInfo);
+
+        //await phoneBookService.Add(newPhoneBookEntry);
+
+        //newPhoneBookEntry = new PhoneBookEntry();
+        //telephoneContactInfo = new ContactInformation { Type = ContactType.PhoneNumber };
+        //emailContactInfo = new ContactInformation { Type = ContactType.EmailAddress };
+        //locationContactInfo = new ContactInformation { Type = ContactType.Location };
+
+        //allRecords = await phoneBookService.GetAllEntries();
+
+    }
+
+    private async Task Update(PhoneBookEntry _entry)
+    {
+        //await phoneBookService.Update(_entry);
+
+        //newPhoneBookEntry = new PhoneBookEntry();
+        //telephoneContactInfo = new ContactInformation { Type = ContactType.PhoneNumber };
+        //emailContactInfo = new ContactInformation { Type = ContactType.EmailAddress };
+        //locationContactInfo = new ContactInformation { Type = ContactType.Location };
+
+        //allRecords = await phoneBookService.GetAllEntries();
+        
+    }
+
+    private async Task Delete(PhoneBookEntry _entry)
+    {
+        //await phoneBookService.Delete(_entry);
+
+        //allRecords = await phoneBookService.GetAllEntries();
+    }
+
+    private async Task Report()
+    {
+        var reportList = await phoneBookService.ReportList();    
+    }
+
+}
